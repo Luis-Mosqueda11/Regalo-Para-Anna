@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruleta de la Suerte</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f0f4ef;
+      width: 100%;
+      height: 100vh;
+      font-family: Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contenedor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      color: #1a759f;
+      margin-bottom: 20px;
+    }
+
+    .planes {
+      position: relative;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #03022a;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #101fbf;
+    }
+
+    .mark-winner {
+      position: absolute;
+      clip-path: polygon(0 10px, 60px 0, 60px 20px);
+      background: #1a759f;
+      width: 60px;
+      height: 20px;
+      top: 50%;
+      right: -30px;
+      transform: translateY(-50%);
+      box-shadow: 0 0 3px #33333399;
+    }
+
+    #premio {
+      color: #168aad;
+      margin-top: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      display: none;
+      animation: fadeInZoom 0.8s ease forwards;
+    }
+
+    @keyframes fadeInZoom {
+      0% {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="contenedor">
+    <h1>Gira la ruleta y gana una de estas recompensas ❤️</h1>
+    <div class="planes">
+      <canvas id="idcanvas" width="475" height="475"></canvas>
+      <div class="mark-winner"></div>
+    </div>
+    <button onclick="sortear()" id="boton"><span id="idestado">Girar</span></button>
+    <h3 id="premio"></h3>
+  </div>
+
+  <script>
+    const array_planes = [
+      '1,000 kekitos', 'Picnic en el parque', 'Un ramo de flores', 'Noche de películas',
+      'Una cita in-n-out', 'Cena romántica', 'Viaje a la playa', 'Spa en casa',
+      'Comida(Tu escoges)', 'Ida al templo'
+    ];
+
+    const palette = ["#d9ed92", "#b5e48c", "#99d98c", "#76c893", "#52b69a", "#34a0a4", "#168aad", "#1a759f", "#1e6091", "#184e77"];
+    let canvas = document.getElementById("idcanvas");
+    let context = canvas.getContext("2d");
+    const center = canvas.width / 2;
+
+    function dibujarRuleta() {
+      for (let i = 0; i < array_planes.length; i++) {
+        context.beginPath();
+        context.moveTo(center, center);
+        context.arc(center, center, center - 20, (i * 2 * Math.PI) / array_planes.length, ((i + 1) * 2 * Math.PI) / array_planes.length);
+        context.lineTo(center, center);
+        context.fillStyle = palette[i % palette.length];
+        context.fill();
+
+        context.save();
+        context.translate(center, center);
+        context.rotate((i + 0.5) * (2 * Math.PI) / array_planes.length);
+        context.translate(-center, -center);
+        context.font = "18px Roboto";
+        context.fillStyle = "white";
+        context.strokeStyle = "black";
+        context.lineWidth = 2;
+        context.textAlign = "right";
+        context.strokeText(array_planes[i], canvas.width - 50, center);
+        context.fillText(array_planes[i], canvas.width - 50, center);
+        context.restore();
+      }
+    }
+
+    let pos_ini = 0;
+    let clic = 0;
+    let movement;
+
+    function sortear() {
+      if (clic === 0) {
+        movement = setInterval(() => {
+          pos_ini += 10;
+          canvas.style.transform = `rotate(${pos_ini}deg)`;
+        }, 10);
+        clic = 1;
+        document.getElementById("idestado").textContent = "Detener";
+      } else {
+        clearInterval(movement);
+        clic = 0;
+        document.getElementById("idestado").textContent = "Girar";
+        document.getElementById("boton").style.display = "none";
+
+        const seleccionadoIndex = Math.floor((pos_ini % 360) / (360 / array_planes.length));
+        const seleccionado = array_planes[array_planes.length - 1 - seleccionadoIndex];
+        const premioElement = document.getElementById("premio");
+        premioElement.textContent = `🎉 ¡Felicidades! Has ganado: ${seleccionado} 🎉`;
+        premioElement.style.display = "block";
+      }
+    }
+
+    dibujarRuleta();
+  </script>
+</body>
+
+</html>
