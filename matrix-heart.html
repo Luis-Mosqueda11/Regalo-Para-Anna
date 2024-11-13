@@ -9,41 +9,29 @@
             margin: 0;
             overflow: hidden;
             position: relative;
-            font-family: Arial, sans-serif;
         }
         canvas {
             display: block;
-            width: 100vw;
-            height: 100vh;
         }
         .overlay-text {
             position: absolute;
+            top: 500px;
             left: 50%;
             transform: translateX(-50%);
             color: #30e8eb;
-            font-size: 5vw;
+            font-size: 45px;
             text-align: center;
             z-index: 10;
             display: block;
         }
         .first-line {
-            top: 35vh;
+            top: 485px;
         }
         .second-line {
-            top: 45vh;
+            top: 530px;
         }
         .third-line {
-            top: 55vh;
-        }
-        @media (max-width: 768px) {
-            .overlay-text {
-                font-size: 7vw;
-            }
-        }
-        @media (max-width: 480px) {
-            .overlay-text {
-                font-size: 9vw;
-            }
+            top: 575px;
         }
         </style>
     </head>
@@ -51,32 +39,23 @@
     <canvas id="canvas"></canvas>
     <script>
     var canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d');
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    var canvasW = canvas.width,
-        canvasH = canvas.height,
-        canvasWHalf = canvasW / 2,
-        canvasHHalf = canvasH / 2,
-        xoff = canvasWHalf - 306,
-        yoff = 50,
-        bg = '00061a',
-        id = 0,
-        raindrops = [],
-        minSize = 1,
-        maxSize = 4,
-        minSpeed = 5,
-        maxSpeed = 20,
-        minHue = 0,
-        maxHue = 360,
-        maxAmount = 50;
-
+    ctx = canvas.getContext('2d'),
+    canvasW = canvas.width = window.innerWidth,
+    canvasH = canvas.height = window.innerHeight,
+    canvasWHalf = canvasW / 2,
+    canvasHHalf = canvasH / 2,
+    xoff = canvasWHalf - 306,
+    yoff = 50,
+    bg = '00061a',
+    id = 0,
+    raindrops = [],
+    minSize = 1,
+    maxSize = 4,
+    minSpeed = 5,
+    maxSpeed = 20,
+    minHue = 0,
+    maxHue = 360,
+    maxAmount = 50;
     function random(min, max) {
         if (arguments.length < 2) {
             max = min;
@@ -84,7 +63,6 @@
         }
         return Math.floor(Math.random() * (max - min) + min);
     }
-
     function hexToRGB(hex, opacity) {
         var rgb = '';
         hex.match(/.{2}/g).forEach(function(n) {
@@ -92,10 +70,11 @@
         });
         return 'rgba(' + rgb + opacity + ')';
     }
-
     function draw() {
+        // Heart
         ctx.fillStyle = hexToRGB(bg, '0.1');
         ctx.beginPath();
+        // Left half
         ctx.moveTo(0, 0);
         ctx.lineTo(canvasWHalf, 0);
         ctx.lineTo(304 + xoff, 97 + yoff);
@@ -103,6 +82,7 @@
         ctx.bezierCurveTo(74 + xoff, 251 + yoff, 184 + xoff, 300 + yoff, 304 + xoff, 447 + yoff);
         ctx.lineTo(canvasWHalf, canvasH);
         ctx.lineTo(0, canvasH);
+        // Right half
         ctx.moveTo(canvasW, 0);
         ctx.lineTo(canvasWHalf, 0);
         ctx.lineTo(304 + xoff, 97 + yoff);
@@ -112,12 +92,11 @@
         ctx.lineTo(canvasW, canvasH);
         ctx.closePath();
         ctx.fill();
-
+        // Raindrops
         for (var i = 1; i < id; i++) {
             raindrops[i].fall();
-        }
+        };
     }
-
     var Raindrop = function() {
         id++;
         this.y = random(-canvasH);
@@ -125,10 +104,10 @@
         this.size = random(minSize, maxSize);
         this.speed = random(minSpeed, maxSpeed);
         this.color = 'hsl(' + random(minHue, maxHue) + ',100%,55%)';
+        this.origColor = this.color;
         this.id = id;
         raindrops[id] = this;
     };
-
     Raindrop.prototype.fall = function() {
         this.y += this.speed;
         if (this.y >= canvasH) {
@@ -140,13 +119,13 @@
         var gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
         gradient.addColorStop(0, '#fff');
         gradient.addColorStop(1, this.color);
+        gradient.addColorStop(1, hexToRGB(bg, 0));
         ctx.rect(this.x, this.y, this.size, maxSpeed);
         ctx.fillStyle = gradient;
         ctx.fill();
         ctx.closePath();
         ctx.restore();
     };
-
     (function init() {
         ctx.fillStyle = '#' + bg;
         ctx.fillRect(0, 0, canvasW, canvasH);
@@ -154,13 +133,11 @@
             new Raindrop();
         }
     }());
-
     function animate() {
         draw();
         window.requestAnimationFrame(animate);
     }
     window.requestAnimationFrame(animate);
-
     function mouseTrail(x, y) {
         ctx.save();
         ctx.globalCompositeOperation = 'overlay';
@@ -169,14 +146,11 @@
         ctx.fill();
         ctx.restore();
     }
-
     window.addEventListener('mousemove', function(cursor) {
         mouseTrail(cursor.x, cursor.y);
     });
     </script>
-
     <div class="overlay-text first-line">De: Mimocho</div> 
     <div class="overlay-text second-line">Para: Casimerito</div> 
-    <div class="overlay-text third-line">Te amo poquitoooo!!!</div>
-</body>
+    <div class="overlay-text third-line">Te amo poquitoooo!!!</div></body>
 </html>
