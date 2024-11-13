@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+    rel="shortcut icon"
+    href="assets/favicon/favicon.jpg"
+    type="image/x-icon"
+    />
+    <title>Me perdonas</title>
+    <style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    .container {
+        height: 100vh;
+        background-color: #22333b;
+        color: #f2f4f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .sub-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #a9927d;
+        width: 500px;
+        height: auto;
+        padding: 20px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    header {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 500px;
+        height: 400px;
+        position: relative;
+        background-color: #a9927d;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    footer > button {
+        background-color: #5e503f;
+        border: none;
+        padding: 15px 40px;
+        margin: 20px;
+        border-radius: 5px;
+        position: absolute;
+        transition: background-color 0.3s ease-in-out, left 0.3s ease, top 0.3s ease;
+    }
+
+    footer > button#btnSi {
+        left: 100px;
+    }
+
+    footer > button#btnNo {
+        background-color: #f2f4f3;
+        right: 100px;
+    }
+
+    footer > button#btnSi:hover {
+        background-color: #403e3c;
+    }
+
+    article.alert{
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    z-index: -1;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+}
+
+    article.alert > div h1 {
+    font-size: 25px;
+    color: #f2f4f3;
+}
+
+    article.alert > div p {
+    font-size: 10px;
+    color: #888888;
+}
+
+article.alert > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-around;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    width: 400px;
+    height: 500px;
+    background: linear-gradient(to top, #5e503f, #a9927d, #22333b);
+    border-radius: 10px;
+}
+
+    .image-container {
+        width: 150px;
+        height: 250px;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .image-container img {
+        width: 250px;
+        height: 250px;
+        border-radius: 10px;
+    }
+
+    .hidden {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <main class="container">
+    <article class="sub-container" id="hidden1">
+        <header>
+        <h1>Me perdonas</h1>
+        <div class="image-container">
+            <img src="meperdonas.jpg" alt="gatito con flores" />
+        </div>
+        </header>
+    </article>
+
+    <footer id="hidden2">
+        <button id="btnSi">Sipirili</button>
+        <button id="btnNo">Noporolo</button>
+    </footer>
+    </main>
+
+    <article class="alert" id="show">
+    <div>
+        <h1>Yayyyy, te amooooo!!!</h1>
+        <p>Nomás por eso y por guapa te ganaste una flores</p>
+        <div class="image-container">
+            <img src="gatito.png" alt="gatito con flores" />
+        </div>
+    </div>
+    </article>
+
+<script>
+    const btnSi = document.getElementById("btnSi");
+    const btnNo = document.getElementById("btnNo");
+    const HIDDEN1 = document.getElementById("hidden1");
+    const HIDDEN2 = document.getElementById("hidden2");
+    const SHOW = document.getElementById("show");
+
+    btnSi.addEventListener("click", () => {
+        HIDDEN1.classList.add("hidden");
+        HIDDEN2.classList.add("hidden");
+        SHOW.style.zIndex = "2";
+    });
+
+    btnNo.addEventListener("mouseover", () => {
+        const posX = Math.floor(Math.random() * 75); 
+        const posY = Math.floor(Math.random() * 75);
+
+        btnNo.style.left = `${posX}%`;
+        btnNo.style.top = `${posY}%`;
+    });
+</script>
+</body>
+</html>
