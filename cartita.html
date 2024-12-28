@@ -2,9 +2,10 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=0.65">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Tienes un mensaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -14,82 +15,201 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to top, #FFDDD2, #F9F3DF, #A8D8EA);
+            background: linear-gradient(to top, #ffffff, #cdb3c7, #6b3e4f);
             background-size: cover;
             background-position: center center;
+            font-family: 'Lora';
         }
 
-        #card {
+        #cardContainer {
             position: relative;
-            perspective: 3000px;
-        }
-        
-        section {
             width: 560px;
             height: 400px;
+            perspective: 1000px;
+            margin-top: 60px;
+        }
+
+        header {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%; 
+        height: 60px; 
+        background-color: transparent;        
+        padding: 10px 20px; 
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+        z-index: 1000; 
+    }
+
+    #homeButton {
+        font-size: 16px;
+        color: #FFFFFF;
+        background-color: #6b3e4f;
+        height: 25px;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        text-decoration: none; 
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        top: 20px;
+        position: relative;
+    }
+
+    #homeButton:hover {
+        background-color: #300e1c;
+        color: #ffffff;
+    }
+
+.audio-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #6b3e4f;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    text-decoration: none; 
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    height: 25px;
+    right: 50px;
+    top: 20px;
+}
+
+.toggle-label img {
+    width: 30px;
+    height: 50px;
+    object-fit: contain;
+    align-items: center;
+    display: flex;
+}
+
+
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 25px;
+    background: #ab8795;
+    border-radius: 25px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.1s;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-switch label {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 21px;
+    height: 21px;
+    background: #fff2f2;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.toggle-switch input:checked + label {
+    left: 25px;
+    background: #593040; 
+}
+
+.toggle-switch input:checked ~ .toggle-switch {
+    background: #8e5b5b; 
+}
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             border-radius: 10px;
             box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            display: none;
         }
 
-        #cover {
-            background-color: #1E2A38;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            transition: transform 2s;
-            transform-origin: 0% 0%;
+        .card-number {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+}
+
+        .card.active {
+            display: block;
         }
 
-        #cover.animate {
-            transform: rotateX(180deg);
-        }
+        .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; 
+    background-color: #1E2A38;
+    color: #ffffff;
+    transform-origin: 0% 0%; 
+    transition: transform 2s ease-in-out, opacity 1s ease-in-out;
+}
 
-        #cover.animate > * {
-            opacity: 0;
-            transition: opacity 1s;
-        }
 
-        #cover img {
-            height: 50%;
-        }
+.cover.animate {
+    transform: rotateX(180deg);
+}
 
-        #cover h1 {
-            font-size: 32px;
-            margin: 0px;
-            color: #ffffff;
-        }
+.cover.animate > * {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out; 
+}
 
-        #cover h2 {
-            font-size: 18px;
-            margin: 0px;
-            color: #FF616D;
-        }
-
-        #message {
+        .message {
             background-color: rgba(255, 255, 255, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            border-radius: 10px;
             backdrop-filter: blur(8px);
+            height: 100%;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: opacity 1s ease-in-out, transform 1.5s ease-in-out; 
         }
 
-        #message h1 {
+        .message h1 {
             margin: 0;
         }
 
-        #message p {
+        .message p {
             margin: 20px 0;
             padding: 0 20px;
         }
 
-        #message h2 {
+        .message h2 {
             font-size: 16px;
             position: absolute;
             bottom: 10px;
@@ -98,52 +218,347 @@
             color: #5e503f; 
         }
 
-        #message img {
+        .message img {
             height: 60%;
         }
 
+        .message h1 {
+            margin: 0;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            z-index: 10;
+            background-color: #6b3e4f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #leftArrow:hover {
+            background-color: #300e1c;
+            color: #ffffff;
+        }
+
+        #rightArrow:hover {
+            background-color: #300e1c;
+            color: #ffffff;
+        }
+
+        #leftArrow {
+            left: -70px;
+        }
+
+        #rightArrow {
+            right: -70px;
+        }
+
         #flipButton {
-            margin-top: 20px;
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 10px 20px;
             font-size: 16px;
             color: #FFFFFF;
-            background-color: #FF616D;
+            background-color: #6b3e4f;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s;
-            position: relative;
-            left: 40%;
-            top: 10%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         #flipButton:hover {
-            background-color: #FF4C5B;
+            background-color: #300e1c;
+            color: #ffffff;
         }
+
+        #card1 .cover {
+    background-image: url(carta.jpg);
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat; 
+    background-position: center; 
+    background-size: cover;
+    color: #000;
+}
+
+#card1 .cover h2 {
+    position: absolute;
+    top: 300px;
+    left: 160px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+}
+
+
+        #card2 .cover {
+            background-image: url(valentine.jpg);
+            color: black;
+        }
+
+        #card2 .card-number {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000000;
+            margin: 0;
+        }
+
+        #card3 .cover {
+            background-image: url(animation.png);
+            height: 100%;
+            width: 100%;
+            background-repeat: no-repeat; 
+            background-position: center; 
+            background-size: cover;
+            color: #000;
+        }
+
+#card3 .card-number {
+            position: absolute;
+            top: 10px;
+            text-align: justify;
+            left: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000000;
+            margin: 0;
+        }
+
+        #card3 .message h2 {
+            font-size: 8px;
+            position: center;
+            bottom: 10px;
+            right: 30px;
+            margin: 0;
+            color: #5e503f; 
+        }
+
+        #card4 .cover {
+            background: linear-gradient(to top, #d7e5fa, #e7f19a, #4e97f0);
+            color: #000;
+        }
+
+        #card4 .card-number {
+            position: absolute;
+            top: 10px;
+            text-align: justify;
+            left: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #000000;
+            margin: 0;
+        }
+
+        #card4 .cover img {
+            height: 150px;
+            width: 450px;
+            padding: 10px 30px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            display: flex;
+        }
+
+        #card4 .cover h2 {
+            position: absolute;
+            top: 50px;
+            left: 170px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #000000;
+            margin: 0;
+        }
+
+        #card5 .cover {
+            background: linear-gradient(to top, #0e1824, #394e66, #0e1824);
+            color: white;
+        }
+
+        #card6 .cover {
+            background-image: url(couple.jpg);
+            color: #000;
+        }
+
+        #card6 .card-number {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
+}
+
+#card6 .message p{
+    font-size: 13px;
+}
+
     </style>
 </head>
 
 <body>
-    <main id='card'>
-        <section id="cover">
-            <img src="lilies.png">
-            <h1>Para la mejor novia del mundo</h1>
-            <h2>❣️ Te amo poquitooo!!! ❣️</h2>
-        </section>
-        <section id='message'>
-            <h1>¡Feliz cumple mes!</h1>
-            <p>Quiero comenzar esta carta dándote las gracias por estos hermosos 10 meses a tu lado. En este tiempo, me has enseñado tantas cosas, especialmente sobre la importancia del evangelio en una relación, sobre lo que significa amar de verdad y sobre el valor de crecer juntos y también individualmente. Aprovecho esta oportunidad para decirte cuánto te amo y lo mucho que anhelo construir una maravillosa vida contigo, compartiendo cada etapa con la mejor compañera, esposa y futura madre que pueda imaginar. Y solo quiero terminar confesándote que desde mis ojos y corazón, tú eres simplemente perfecta. Te amo mucho, de aquí a la luna y pasitos de tortuga.</p>
-            <h2>Atte: De tu mimocho 💗</h2>
+    <header>
+        <a id="homeButton" href="index-annita.html">Inicio</a>
+        <div class="audio-toggle">
+            <div class="toggle-label">
+                <img src="sonido.png" alt="Imagen de Ruleta">
+            </div>
+            <div class="toggle-switch">
+                <input type="checkbox" id="audio-toggle">
+                <label for="audio-toggle"></label>
+            </div>
+            <audio id="audioElement">
+                <source src="wavetoearth-seasons.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </header>
+    <main id='cardContainer'>
+        <section class="card active" id="card1">
+            <section class="cover">
+                <h3 class="card-number">#1</h3>
+                <h2>❣️ Para: La hermosa jovén ❣️</h2>
+            </section>
+            <section class='message'>
+                <p>¿Qué te puedo decir, mi niña? Desde que llegué, siento que el Señor me ha sonreído al darme la maravillosa oportunidad de poder estar a tu lado. Cuando me contaste que habías estado orando por una relación sana y plena, me sorprendí, y al mismo tiempo me inspiraste a dar lo mejor de mí. Sé que mereces mucho, y deseo poder ser esa persona que tenga el honor de estar a tu lado. Desde que te vi después de regresar de mi misión, he podido comprender y aplicar más profundamente la escritura de Mateo 13:45-46, donde siento que tú eres mi perla de gran precio. Estoy dispuesto a darlo todo para construir un futuro próspero y hermoso contigo.</p>
+                <h2>Atte: Luis Mosqueda (El mimocho) 💌</h2>
+            </section>
         </section>
 
-        <button id="flipButton" onclick="toggleFlip()">Abrir carta</button>
+        <section class="card" id="card2">
+            <section class="cover">
+                <h3 class="card-number">#2</h3>
+            </section>
+            <section class='message'>
+                <h1>FELIZ DÍA DE SAN VALENTÍN</h1>
+                <p>Sé que te lo dije antes, pero quiero que quede claro una vez más: eres y seguirás siendo mi mayor motivación para ser mejor. Tomar este reto no ha sido fácil, pero el simple hecho de tener cerca a una mujer tan hermosa como tú, que me inspira en todos los ámbitos sentimental, amoroso, intelectual, espiritual, social y muchos más, hace que descubra nuevas razones para admirarte cada día. Gracias por ser mi lugar seguro. Me haces sentir que contigo es con quien quiero estar, no solo en los momentos felices, sino también en las pruebas de la vida. Espero que este sea el primero de muchos San Valentines a tu lado.</p>
+                <h2>Te amo muchísimo</h2>
+            </section>
+        </section>
+
+        <section class="card" id="card3">
+            <section class="cover">
+                <h3 class="card-number">#3</h3>
+            </section>
+            <section class='message'>
+                <p>Mi niña hermosa, nunca me cansaré de decirlo, de agradecerle al Señor y a ti por la oportunidad y el privilegio de ser tu novio. Eres aquella persona con quien el Señor me ha bendecido, la mujer más hermosa, no solo físicamente, sino también como persona. Si pudieras verte con los ojos con los que yo te veo, te darías cuenta de la chica perfecta que eres. Describirte sería imposible porque no hay palabras suficientes para explicar lo maravillosa que eres. Sé que hemos pasado por momentos complicados, y para eso quiero que vayas y tomes tus escrituras (no seas flojita). Busca 2 Nefi 31:19-21 y, mientras lo lees, reflexiona en esta pregunta: ¿Cómo, como pareja, debemos actuar para conseguir la vida eterna? Mi propósito contigo es ese: perseverar hasta el fin y conseguir la vida eterna a tu lado. Sabemos que el camino no será fácil, pero también sabemos que la recompensa será grandiosa, tanto aquí como por la eternidad.</p>
+                <h2>Te amo de aquí al sol (como el grado de gloria más elevado) y de vuelta, y a paso de tortuga. En otras palabras, te amo poquitooo.</h2>
+            </section>
+        </section>
+
+        <section class="card" id="card4">
+            <section class="cover">
+                <h3 class="card-number">#4</h3>
+                <h2>💗 Para mi corazón 💗</h2>
+                <img src="arbol.jpg" alt="Cover Image" style="height: 50%;">
+            </section>
+            <section class='message'>
+                <h1>¡Gracias por todo!</h1>
+                <p>No puedo expresar cuán feliz y agradecido me siento al celebrar estos primeros seis meses a tu lado. Este tiempo ha sido de lo más especial, y deseo que sigamos construyendo momentos inolvidables juntos. Eres, has sido y siempre serás la hermosa joven por la cual oré al Señor con tanta fe y dedicación. Quiero hacerte un pequeño detalle que espero valores como algo muy especial y personal. Escribo esto con la intención de mostrarte que cada día me enamoro más de ti. Busco intencionalmente una cualidad o experiencia que me hace amarte de una nueva manera, y eso me llena de felicidad.</p>
+                <h2>Te amo poquitooo</h2>
+            </section>
+        </section>
+
+        <section class="card" id="card5">
+            <section class="cover">
+                <h3 class="card-number">#5</h3>
+                <img src="lilies.png" alt="Cover Image" style="height: 50%;">
+                <h1>Para la mejor novia del mundo</h1>
+                <h2>❣️ Te amo poquitooo!!! ❣️</h2>
+            </section>
+            <section class='message'>
+                <h1>¡Feliz cumple mes!</h1>
+                <p>Quiero comenzar esta carta dándote las gracias por estos hermosos 10 meses a tu lado. En este tiempo, me has enseñado tantas cosas, especialmente sobre la importancia del evangelio en una relación, sobre lo que significa amar de verdad y sobre el valor de crecer juntos y también individualmente. Aprovecho esta oportunidad para decirte cuánto te amo y lo mucho que anhelo construir una maravillosa vida contigo, compartiendo cada etapa con la mejor compañera, esposa y futura madre que pueda imaginar. Y solo quiero terminar confesándote que desde mis ojos y corazón, tú eres simplemente perfecta. Te amo mucho, de aquí a la luna y pasitos de tortuga.</p>
+                <h2>Atte: De tu mimocho 💗</h2>
+            </section>
+        </section>
+
+        <section class="card" id="card6">
+            <section class="cover">
+                <h3 class="card-number">#6</h3>
+                <h2>Semptiterno</h2>
+            </section>
+            <section class='message'>
+                <p>Mi corazón, quiero comenzar esta carta reconociendo que eres la mejor persona que he conocido, que tienes un potencial enorme y que me siento bendecido de tenerte en mi vida. Nunca he visto a alguien tan servicial, amorosa y entregada al Señor como tú. Estos meses juntos me han enseñado más de lo que podrías imaginar, no tan solo en lo temporal sino también en los espirtual (un área que creía que había aprendido todo), cada experiencia que hemos compartido me hace fortalecer mi deseo de un futuro a tu lado. Hay una escritura que refleja perfectamente mi esperanza y motivación: Romanos 8:25-28. En ella encuentro inspiración para seguir preparándome y esforzándome por mantener los estándares que tú y el Señor esperan de mí. Eres una luz en mi vida, y tu ejemplo me impulsa a ser mejor cada día. Nunca me escucharás negarte la oportunidad de servir en una misión, porque sé del gran potencial que tienes para ayudar a muchas almas a acercarse a Cristo. También sé cuánto crecerás personalmente durante ese tiempo. Si ya ahora eres un 100/10, no puedo ni imaginar lo maravillosa que serás al regresar, llena de experiencias y aún más cercana al Señor. Te escribo estas palabras desde lo más profundo de mi corazón para expresarte mi gratitud por lo vivido e igual expresar mi anhelo de un futuro contigo. Gracias por ser quien eres y por iluminar mi vida con tu amor, tu fe y tu increíble corazón, nunca pierdas esa esencia que te vuelve tan especial.</p>
+                <h2>Con todo mi amor, tu kikarlo</h2>
+            </section>
+        </section>
+
+        <button class="arrow" id="leftArrow">&#8249;</button>
+        <button id="flipButton">Abrir carta</button>
+        <button class="arrow" id="rightArrow">&#8250;</button>
     </main>
 
     <script>
-        function toggleFlip() {
-            document.getElementById("cover").classList.toggle("animate");
+const audioToggle = document.getElementById('audio-toggle');
+const audioElement = document.getElementById('audioElement');
+
+audioToggle.addEventListener('change', () => {
+    if (audioToggle.checked) {
+        audioElement.play();
+    } else {
+        audioElement.pause();
+    }
+});
+
+
+    audioElement.addEventListener("ended", () => {
+        playButton.classList.remove("playing");
+        audioContainer.classList.remove("playing");
+    });
+
+        let currentCardIndex = 0;
+        const cards = document.querySelectorAll('.card');
+        const flipButton = document.getElementById('flipButton');
+
+        function showCard(index) {
+            cards.forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+
+            const activeCard = cards[index];
+            const cover = activeCard.querySelector('.cover');
+            const message = activeCard.querySelector('.message');
+            cover.classList.remove('animate');
+            message.style.display = "none";
         }
+
+        document.getElementById('leftArrow').addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+            showCard(currentCardIndex);
+        });
+
+        document.getElementById('rightArrow').addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex + 1) % cards.length;
+            showCard(currentCardIndex);
+        });
+
+        flipButton.addEventListener('click', () => {
+            const activeCard = cards[currentCardIndex];
+            const cover = activeCard.querySelector('.cover');
+            const message = activeCard.querySelector('.message');
+            cover.classList.toggle('animate');
+            if (cover.classList.contains('animate')) {
+                message.style.display = "flex";
+            } else {
+                message.style.display = "none";
+            }
+        });
+
+        showCard(currentCardIndex);
     </script>
 </body>
 
