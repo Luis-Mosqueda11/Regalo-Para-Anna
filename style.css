@@ -5,11 +5,35 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lora', sans-serif;
     font-size: 16px;
     line-height: 1.5;
     color: #333;
     background-color: #fefae0;
+}
+
+@media (max-width: 320px) {
+    body {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1600px) {
+    body {
+        font-size: 16px;
+    }
 }
 
 :root {
@@ -20,13 +44,148 @@ body {
     --color-highlight: #bc6c25;
 }
 
+header {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 60px; 
+    background-color: transparent;
+    padding: 10px 20px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    z-index: 1000; 
+}
+
+.audio-toggle {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 16px;
+border: 1px solid var(--color-secondary);
+background-color: var(--color-highlight);
+border: none;
+border-radius: 5px;
+padding: 10px 10px;
+text-decoration: none; 
+text-align: center;
+cursor: pointer;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+position: relative;
+height: 45px;
+right: -850px;
+top: 550px;
+}
+
+.audio-toggle.scrolled {
+    background-color: transparent;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.toggle-label img {
+width: 30px;
+height: 50px;
+object-fit: contain;
+align-items: center;
+display: flex;
+filter: brightness(1) invert(0);
+}
+
+.toggle-switch {
+position: relative;
+width: 50px;
+height: 25px;
+background: transparent;
+border-radius: 25px;
+box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+transition: background 0.1s;
+}
+
+.toggle-switch input {
+display: none;
+}
+
+.toggle-switch label {
+position: absolute;
+top: 2px;
+left: 2px;
+width: 21px;
+height: 21px;
+background: var(--color-background);
+border-radius: 50%;
+transition: all 0.3s;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+cursor: pointer;
+}
+
+.toggle-switch input:checked + label {
+left: 25px;
+background: var(--color-secondary); 
+}
+
+.toggle-switch input:checked ~ .toggle-switch {
+background: var(--color-secondary); 
+}
+
+@media (max-width: 768px) {
+    header {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%; 
+        height: 60px; 
+        display: flex;
+        z-index: 1000; 
+    }
+
+    .audio-toggle {
+        gap: 10px;
+        font-size: 16px;
+        height: 30px;
+        width: 100px;
+        right: -240px;
+        top: 425px;
+        }
+
+        .toggle-label img {
+            width: 25px;
+            height: 25px;
+            }
+            
+            .toggle-switch {
+            width: 60px;
+            height: 20px;
+            border-radius: 25px;
+            }
+            
+            .toggle-switch input {
+            display: none;
+            }
+            
+            .toggle-switch label {
+            top: 1px;
+            left: 1px;
+            width: 18px;
+            height: 18px;
+            }
+            
+            .toggle-switch input:checked + label {
+            left: 26px;
+            }
+}
+
 .hero-index {
     position: relative;
     background: url('juntitos.jpg') no-repeat center center/cover;
-    padding: 80px 20px;
+    display: flex;
+    padding: 150px 150px;
+    align-items: center;
     text-align: center;
     z-index: 1;
     overflow: hidden; 
+    height: 680px;
 }
 
 .hero-index.active {
@@ -55,7 +214,7 @@ body {
 }
 
 .hero-content-index h1 {
-    font-size: 48px;
+    font-size: 50px;
     color: var(--color-background);
     font-weight: 700;
     margin-bottom: 10px;
@@ -63,7 +222,7 @@ body {
 }
 
 .hero-content-index p {
-    font-size: 18px;
+    font-size: 22px;
     color: var(--color-background);
     max-width: 600px;
     margin: 0 auto 30px;
@@ -73,16 +232,35 @@ body {
 
 .cta-button {
     border: 1px solid var(--color-secondary);
-    background-color: var(--color-accent);
+    background-color: var(--color-highlight);
     color: #fff;
-    padding: 10px 20px;
+    padding: 15px 25px;
     cursor: pointer;
     border-radius: 5px;
+    font-size: 14px;
     transition: background-color 0.3s;
 }
 
 .cta-button:hover {
-    background-color: var(--color-highlight);
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+}
+
+@media (max-width: 768px) {
+    .hero-index {
+        padding: 30px 15px;
+        height: 500px;
+        max-width: cover;
+    }
+
+    .hero-content-index h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content-index p {
+        font-size: 1.2rem;
+        padding-top: 10px;
+    }
 }
 
 .projects {
@@ -132,6 +310,7 @@ body {
     margin-top: 15px;
     padding: 10px 20px;
     color: #fff;
+    border: 1px solid var(--color-secondary);
     background-color: var(--color-highlight);
     border: none;
     border-radius: 5px;
@@ -142,6 +321,7 @@ body {
 
 .btn:hover {
     background-color: var(--color-accent);
+    color: var(--color-secondary);
 }
 
 .content1 {
@@ -167,7 +347,7 @@ body {
     margin: 0;
     font-size: 18px;
     line-height: 1.5;
-    color: var(--color-background);
+    color: var(--color-accent);
 }
 
 .content1 p {
@@ -209,7 +389,7 @@ body {
     display: inline-block;
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.5s ease;
 }
 
 .scroll-text span.visible {
@@ -220,14 +400,15 @@ body {
 @media (max-width: 768px) {
     .scroll-text-container {
         padding: 30px 15px;
+        height: 525px;
     }
 
     .scroll-text {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
     .scroll-text-secondary {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
         padding-top: 10px;
     }
 }
@@ -250,6 +431,21 @@ body {
     font-size: 25px;
     color: var(--color-primary);
     margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .dates {
+        padding: 20px 10px;
+    }
+
+    .dates h2 {
+        font-size: 1.35rem;
+    }
+
+    .dates p {
+        font-size: 1.0rem;
+        padding-top: 10px;
+    }
 }
 
 .boxes-container {
@@ -357,4 +553,31 @@ body {
 
 .social-link:hover img {
     transform: scale(1.1); 
+}
+
+@media (max-width: 390px) {
+    .footer {
+        padding: 20px;
+        width: cover;
+        height: 75px;
+    }
+
+    .footer {
+        font-size: 16px;
+    }
+    
+    .social {
+        gap: 10px;
+    }
+    
+    .social-link {
+        gap: 5px;
+    }
+    
+    .social-link img {
+        width: 25px;
+        height: 25px;
+        object-fit: contain;
+        transition: transform 0.3s;
+    }
 }
