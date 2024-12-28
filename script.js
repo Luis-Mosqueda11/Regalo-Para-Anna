@@ -1,3 +1,28 @@
+// Header Audio Section
+const audioToggle = document.getElementById('audio-toggle');
+const audioElement = document.getElementById('audioElement');
+
+audioToggle.addEventListener('change', () => {
+    if (audioToggle.checked) {
+        audioElement.play();
+    } else {
+        audioElement.pause();
+    }
+});
+
+// Scroll Animation For The Header Audio Section
+const audioToggleContainer = document.querySelector('.audio-toggle'); 
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 120) {
+        audioToggleContainer.classList.add('scrolled');
+    } else {
+        audioToggleContainer.classList.remove('scrolled');
+    }
+});
+
+
+
 // Scroll Text Animation
 document.addEventListener('DOMContentLoaded', () => {
     const textElements = document.querySelectorAll('.scroll-text');
@@ -28,11 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, letterIndex * 50);
               });
   
-              // Si es el último texto animado, mostrar el secundario
               if (index === textElements.length - 1 && secondaryText) {
                 setTimeout(() => {
                   secondaryText.classList.add('visible');
-                }, letters.length * 50 + 300); // Retraso tras terminar la animación principal
+                }, letters.length * 50 + 300);
               }
   
               observer.unobserve(entry.target);
