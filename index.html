@@ -5,21 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cumple Mes-Luna</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="hero-index">
+    <header>
+        <div class="audio-toggle">
+            <div class="toggle-label">
+                <img src="sonido.jpg" alt="Imagen de Ruleta">
+            </div>
+            <div class="toggle-switch">
+                <input type="checkbox" id="audio-toggle">
+                <label for="audio-toggle"></label>
+            </div>
+            <audio id="audioElement">
+                <source src="LATINMAFIAHumbe-PatadasDeAhogado.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </header>
+
+    <section class="hero-index">
         <div class="hero-content-index">
             <h1>Una historia de amor llena de recuerdos</h1>
             <p>El ser tu novio ha sido toda una dicha. Me has hecho feliz de mil maneras que nunca imaginé posibles. Algo que siempre me trae gozo y nostalgia es ver nuestras fotos, y por esa razón he creado un álbum de fotos de todos nuestros recuerdos.</p>
             <button onclick="window.location.href='https://photos.google.com/u/2/share/AF1QipMqtiWj3wxIK__NJ2uraZlMPNQ8GZfRv_MgEMIoz1Uoh2ThRmq4ikriR53yM9J2sw?key=Z1RqYmJGdHplVVZiV0RhMzJueXlkblhYT2VqdFF3'" class="cta-button">Ver Album</button>
         </div>
-    </header>
+    </section>
 
     <main>
         <section class="projects">
-            <h2>Algunos detalles extras</h2>
-            <p>Tú sabes cuánto me encanta ser detallista contigo, así que creé tres diferentes sitios donde puedes interactuar y pasar un buen rato.</p>
+            <h2>Proyectos</h2>
+            <p>Tú sabes cuánto me encanta ser detallista contigo, así que creé diferentes sitios donde puedes interactuar y pasar un buen rato.</p>
             <div class="cards-container">
                 <article class="card">
                     <div class="image-box">
@@ -27,18 +43,18 @@
                     </div>
                     <div class="content1">
                         <h3>Corazón</h3>
-                        <p>Aquí puedes rellenar mi corazón.</p>
+                        <p>Te cree un corazón de olograma para que puedas rellenarlo de manera simbólica como ya lo has hecho.</p>
                         <a href="matrix-heart.html" class="btn">Ver</a>
                     </div>
                 </article>
                 <article class="card">
                     <div class="image-box">
-                        <img src="carta.png" alt="Imagen de Carta">
+                        <img src="cartitas.png" alt="Imagen de Carta">
                     </div>
                     <div class="content1">
-                        <h3>Cartita de Amorsh</h3>
-                        <p>Aquí te escribí una pequeña carta por nuestro cumple mes.</p>
-                        <a href="cartita.html" class="btn">Ver</a>
+                        <h3>Cartitas de Amorsh</h3>
+                        <p>Aquí te recopile cada una de las cartas que te he dado y por donde te escribire mis futuras cartas para que siempre las puedas leer con nuestra canción tan especial.</p>
+                        <a href="cartitas.html" class="btn">Ver</a>
                     </div>
                 </article>
                 <article class="card">
